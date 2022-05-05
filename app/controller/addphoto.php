@@ -22,7 +22,7 @@ class Addphoto
         require "../app/view/_templates/footer.php";
     }
 
-    public function addphoto()
+    public function add()
     {
         $file = $_FILES["image"];
         if (!(isset($file))) {
