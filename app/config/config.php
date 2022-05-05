@@ -28,5 +28,5 @@ function createModel() {
     return $model;
 }
 
-$upload="C:/wamp/www/legogram/public/upload";
+$upload="C:/wamp64/www/legogram/public/upload";
 $uploadURL="legogram/public/upload";
