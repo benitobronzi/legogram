@@ -34,15 +34,20 @@ class Addphoto
         } else {
             // chaque utilisateur possède son propre répertoire d’upload
             $uploadfile = $GLOBALS["upload"] . "/" . $_SESSION["login"];
+            echo $uploadfile . "<br>";
             if (!file_exists($uploadfile)) {
                 mkdir($uploadfile, 0777, true);
             }
             $filename = "/" . $file["name"];
             $uploadfile = $uploadfile . $filename;
+            echo $uploadfile  . "<br>";
+            echo $file['tmp_name']  . "<br>";
+            print_r($_FILES);
+            print_r($_REQUEST);
             move_uploaded_file($file['tmp_name'], $uploadfile);
-            $this->model->createItem(
+            /*$this->model->createItem(
                 array("path" => $GLOBALS["uploadURL"] . "/" . $_SESSION["login"] . $filename)
-            );
+            );*/
         }
     }
 }
