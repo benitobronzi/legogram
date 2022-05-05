@@ -24,21 +24,25 @@ class Addphoto
 
     public function addphoto()
     {
-        $uploaddir = '/img';
-        $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
-
-        echo '<pre>';
-        if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-            echo "Le fichier est valide, et a été téléchargé
-           avec succès. Voici plus d'informations :\n";
+        $file = $_FILES["image"];
+        if (!(isset($file))) {
+            $error = "Fichier manquant";
+        } else if ($file["size"] == 0) {
+            $error = "Fichier vide ou trop grand (max 3MB)";
+        } else if ($file["error"] != 0) {
+            $error = "Problème lors de l'envoi du fichier";
         } else {
-            echo "Attaque potentielle par téléchargement de fichiers.
-          Voici plus d'informations :\n";
+            // chaque utilisateur possède son propre répertoire d’upload
+            $uploadfile = $GLOBALS["upload"] . "/" . $_SESSION["login"];
+            if (!file_exists($uploadfile)) {
+                mkdir($uploadfile, 0777, true);
+            }
+            $filename = "/" . $file["name"];
+            $uploadfile = $uploadfile . $filename;
+            move_uploaded_file($file['tmp_name'], $uploadfile);
+            $this->model->createItem(
+                array("path" => $GLOBALS["uploadURL"] . "/" . $_SESSION["login"] . $filename)
+            );
         }
-
-        echo 'Voici quelques informations de débogage :';
-        print_r($_FILES);
-
-        echo '</pre>';
     }
 }
