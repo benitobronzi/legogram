@@ -81,3 +81,5 @@ class Model {
     }
 
 }
+
+//Ajouter ici createItem pour pouvoir récupèrer l'URL du fichier... un truc comme ça
